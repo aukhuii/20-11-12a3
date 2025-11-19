@@ -23,6 +23,7 @@
       width: 340px;
       height: 480px;
       perspective: 1200px; /* để tạo hiệu ứng 3D */
+      cursor: pointer;      /* gợi ý có thể bấm/chạm */
     }
 
     .card-inner {
@@ -33,7 +34,13 @@
       transform-style: preserve-3d;
     }
 
+    /* Hover cho máy tính */
     .card:hover .card-inner {
+      transform: rotateY(180deg) scale(1.03);
+    }
+
+    /* Class cho mobile / bấm */
+    .card-inner.is-flipped {
       transform: rotateY(180deg) scale(1.03);
     }
 
@@ -223,6 +230,11 @@
         width: 90vw;
         height: 70vh;
       }
+
+      /* Gợi ý rõ hơn cho mobile */
+      .hint span:last-child {
+        content: "Chạm để mở nè...";
+      }
     }
   </style>
 </head>
@@ -237,11 +249,11 @@
           <div class="card-front-title">Chúc mừng Ngày Nhà Giáo Việt Nam</div>
           <div class="card-front-sub">
             Tập thể lớp 12A3 chúng em,<br />
-            chúc thầy 20/11 vui vẻ!!🩵🩵
+            chúc thầy 20/11 vui vẻ!!💛
           </div>
           <div class="hint">
             <span class="hint-dot"></span>
-            <span>Di chuột vào để mở nè...</span>
+            <span>Di chuột hoặc chạm để mở nè...</span>
           </div>
         </div>
       </div>
@@ -249,7 +261,6 @@
       <!-- MẶT SAU -->
       <div class="card-face card-back">
         <div>
-          <!-- Đổi h2, h3 thêm class để đổi màu -->
           <h2 class="title-date">20 tháng 11</h2>
           <h3 class="title-greeting">Kính gửi Thầy Minh thân mến,</h3>
           <p>
@@ -283,6 +294,27 @@
       </div>
     </div>
   </div>
+
+  <!-- JS: bấm / chạm để mở card trên điện thoại -->
+  <script>
+    (function () {
+      const card = document.querySelector('.card');
+      const inner = document.querySelector('.card-inner');
+
+      if (!card || !inner) return;
+
+      // Phát hiện thiết bị cảm ứng
+      const isTouchDevice =
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        navigator.msMaxTouchPoints > 0;
+
+      if (isTouchDevice) {
+        card.addEventListener('click', function () {
+          inner.classList.toggle('is-flipped');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
-
